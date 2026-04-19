@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -37,6 +39,7 @@ const checkPort = async (port, maxPort = 65535) => {
     app.use(morgan('dev'));
 
     // Routes
+    app.use('/api/marketplace', require('./routes/marketplace.js'));
     app.use('/api/items', require('./routes/items'));
     app.use('/api/stats', require('./routes/stats'));
 
