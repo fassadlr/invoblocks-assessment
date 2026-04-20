@@ -43,21 +43,30 @@ const checkPort = async (port, maxPort = 65535) => {
     app.use('/api/items', require('./routes/items'));
     app.use('/api/stats', require('./routes/stats'));
 
-    require('./config/dbHandler.js').connect();
-
     /**
-     * @route    [HTTP_METHOD] /api/endpoint
-     * @desc     [Short summary of what this endpoint does, e.g., Reads or sets value in smart contract]
-     * @author   [Your Name]
-     * @access   [public/private/auth-required]
-     * @param    {Request}  req  - Express request object. [Describe relevant body/query/params fields]
+     * @route    GET /api/marketplace
+     * @desc     This endpoint reads a market place contract deployed on Sepolia and returns a list of items for sale on a market place.
+     * @author   Francois de la Rouviere
+     * @access   https://github.com/fassadlr/invoblocks-assessment
+     * @param    {Request}  req  - This is just a GET with no parameters passed.
      * @param    {Response} res  - Express response object.
-     * @returns  {JSON}          [Describe the JSON structure returned]
-     * @throws   [Error conditions, e.g., 400 on invalid input, 500 on contract failure]
+     * @returns  {JSON}          - An array of:
+     *                              {
+     *                                  "0":"0xf61041F7e2Dd35848088f2fa719245b7932aC3f8",
+     *                                  "1":"car1",
+     *                                  "2":"1000",
+     *                                  "3":true,
+     *                                  "__length__":4,
+     *                                  "owner":"0xf61041F7e2Dd35848088f2fa719245b7932aC3f8",
+     *                                  "itemName":"car1",
+     *                                  "price":"1000",
+     *                                  "sold":true
+     *                              }
+     * @throws   500 on contract call failure
      *
      * @example
      * // Example request
-     * curl -X POST http://localhost:3001/contract/value -H "Content-Type: application/json" -d '{"value": 42}'
+     * curl  http://localhost:3001/api/marketplace'
      *
      * // Example response
      * {
